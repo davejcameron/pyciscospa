@@ -1,0 +1,8 @@
+requests
+lxml
+xmljson
+requests-mock
+check-manifest
+readme_renderer
+flake8
+pytest

@@ -21,7 +21,8 @@ def main():
 
     client = CiscoClient(args.host, args.username, args.password)
 
-    client.get_phones()
+    print(client.get_phones())
+
 
 if __name__ == '__main__':
     sys.exit(main())

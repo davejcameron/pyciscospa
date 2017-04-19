@@ -1,1 +1,1 @@
-from pyciscospa.client import CiscoClient
+from pyciscospa.client import CiscoClient  # noqa: F401
