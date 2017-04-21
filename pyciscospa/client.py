@@ -3,7 +3,7 @@ PyCiscoSPA
 """
 import requests
 from lxml.etree import fromstring
-from xmljson import yahoo
+from xmljson import parker
 
 STATUS_URL = "http://{}/admin/status.xml&xuser={}&xpassword={}"
 
@@ -29,13 +29,13 @@ class CiscoClient(object):
 
         if not raw_res.status_code == 200:
             raise PyCiscoSPAError("Login Error: Bad HTTP status code.")
-        self._data = yahoo.data(fromstring(raw_res.content))
+        self._data = parker.data(fromstring(raw_res.content))
 
     def get_phones(self):
         """Gets the status of the phone lines"""
 
         self._get_data()
-        status = self._data['flat-status']
+        status = self._data
 
         lines = []
         for line in [1, 2]:
@@ -57,6 +57,7 @@ class CiscoClient(object):
                 'next_registration':
                     status['Next_Registration_In'][line - 1]
             }
+
             lines.append(state)
 
         return lines
