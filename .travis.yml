@@ -4,6 +4,7 @@ env:
   - TOXENV=py27
   - TOXENV=py33
   - TOXENV=py34
+  - TOXENV=lint
   global:
 install: pip install tox
 script: tox
@@ -21,7 +22,7 @@ deploy:
   on:
     branch: master
     tags: false
-    condition: $TRAVIS_PYTHON_VERSION = "2.7"
+    condition: '"$TOXENV" == *"py27"*'
 - provider: pypi
   user: davejcameron
   password:
@@ -29,4 +30,4 @@ deploy:
   on:
     branch: master
     tags: true
-    condition: $TRAVIS_PYTHON_VERSION = "2.7"
+    condition: '"$TOXENV" == *"py27"*'
