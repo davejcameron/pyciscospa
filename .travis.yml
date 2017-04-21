@@ -1,16 +1,32 @@
-# this file is *not* meant to cover or endorse the use of travis, but rather to
-# help confirm pull requests to this project.
-
 language: python
-
 env:
+  matrix:
   - TOXENV=py27
   - TOXENV=py33
   - TOXENV=py34
-
+  global:
 install: pip install tox
-
 script: tox
-
 notifications:
   email: false
+
+deploy:
+- provider: pypi
+  distributions: sdist
+  server: https://testpypi.python.org/pypi
+  user: davejcameron
+  password:
+    secure: YO0pX3EqG+IEBJcsH2dpI7dujIw+uLtbnYfbwR1vYu8qrHU15HKKTf2JAa01/XUEmSKtTemINOovBS4yzY8ohgI7iI3dNdHzmQpOmqnJmE0hKZsCzMjA+aAyyc2aoCemZmw6qbMEBrHwx9tz1UpWVGmiFp3OVtZDdKGFSFK7Bj6ScRkD8AIeLaYiMrNU7ACpeGo/zlnGDzQqFj6L/Ey3cA4X47uB+g6AkL68DTSATGnhydIo3jLZw9ph8Nr3NYvJdB2sA4C4rzDD7PQQYDuYjTgDdZIdYtqL2/txXZTlKg0Y/bsgZhQ0uFR8YBkU1CKJ+6/iC7CBZ/XKElVEaosW1bgle1deKSSAYl/1D5I5it8JZJtvXS2xrZs8ElTR7BoKEcJCqaGqUBAc3oyCsRgLx2JLw2u93HbHkLAS27k2kibS78pmzL+togFMQc7cUzZLWcd8ba1eSDA67fGU9kaTu8eCmomsfhX1RAg5T+WZFWKkK591yVGtidZtdtWE7pbCmtv39fPtB9vnPZwmd6Z3O3DJvtPO+VO/AZSGCrbRCJkXYjGPPy6cNCRnArogTYq+cBgCrA8dqWLS6w8109ozrKOUWG7yYSwtQJzV0RqnhitRAhT3di3DptakbhMGVBSr1aYvBrIc/k8Tn5w6+hq9/thlprxMaOiK2Un9x7Gqg2k=
+  skip_cleanup: true
+  on:
+    branch: master
+    tags: false
+    condition: $TRAVIS_PYTHON_VERSION = "2.7"
+- provider: pypi
+  user: davejcameron
+  password:
+    secure: YO0pX3EqG+IEBJcsH2dpI7dujIw+uLtbnYfbwR1vYu8qrHU15HKKTf2JAa01/XUEmSKtTemINOovBS4yzY8ohgI7iI3dNdHzmQpOmqnJmE0hKZsCzMjA+aAyyc2aoCemZmw6qbMEBrHwx9tz1UpWVGmiFp3OVtZDdKGFSFK7Bj6ScRkD8AIeLaYiMrNU7ACpeGo/zlnGDzQqFj6L/Ey3cA4X47uB+g6AkL68DTSATGnhydIo3jLZw9ph8Nr3NYvJdB2sA4C4rzDD7PQQYDuYjTgDdZIdYtqL2/txXZTlKg0Y/bsgZhQ0uFR8YBkU1CKJ+6/iC7CBZ/XKElVEaosW1bgle1deKSSAYl/1D5I5it8JZJtvXS2xrZs8ElTR7BoKEcJCqaGqUBAc3oyCsRgLx2JLw2u93HbHkLAS27k2kibS78pmzL+togFMQc7cUzZLWcd8ba1eSDA67fGU9kaTu8eCmomsfhX1RAg5T+WZFWKkK591yVGtidZtdtWE7pbCmtv39fPtB9vnPZwmd6Z3O3DJvtPO+VO/AZSGCrbRCJkXYjGPPy6cNCRnArogTYq+cBgCrA8dqWLS6w8109ozrKOUWG7yYSwtQJzV0RqnhitRAhT3di3DptakbhMGVBSr1aYvBrIc/k8Tn5w6+hq9/thlprxMaOiK2Un9x7Gqg2k=
+  on:
+    branch: master
+    tags: true
+    condition: $TRAVIS_PYTHON_VERSION = "2.7"

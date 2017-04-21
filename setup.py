@@ -5,38 +5,54 @@ https://packaging.python.org/en/latest/distributing.html
 https://github.com/pypa/sampleproject
 """
 
+import io
+import os
+import re
+
 # Always prefer setuptools over distutils
 from setuptools import setup, find_packages
 # To use a consistent encoding
 from codecs import open
-from os import path
 
-here = path.abspath(path.dirname(__file__))
+here = os.path.abspath(os.path.dirname(__file__))
 
 # Get the long description from the README file
-with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+with open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
+
+
+def read(*names, **kwargs):
+    """Read a file."""
+    return io.open(
+        os.path.join(os.path.dirname(__file__), *names),
+        encoding=kwargs.get('encoding', 'utf8')
+    ).read()
+
+
+def find_version(*file_paths):
+    """Read the version number from a source file."""
+    # Why read it, and not import?
+    # see https://groups.google.com/d/topic/pypa-dev/0PkjVpcxTzQ/discussion
+    version_file = read(*file_paths, encoding='utf8')
+
+    # The version line must have the form
+    # __version__ = 'ver'
+    version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]",
+                              version_file, re.M)
+    if version_match:
+        return version_match.group(1)
+    raise RuntimeError("Unable to find version string.")
+
 
 setup(
     name='pyciscospa',
-
-    # Versions should comply with PEP440.  For a discussion on single-sourcing
-    # the version across setup.py and the project code, see
-    # https://packaging.python.org/en/latest/single_source_version.html
-    version='1.0.0',
-
+    version=find_version('pyciscospa', '__init__.py'),
     description='A package to interface with Cisco SPA ATA devices',
     long_description=long_description,
-
-    # The project's main homepage.
     url='https://github.com/davejcameron/pyciscospa',
-
-    # Author details
     author='David Cameron',
     author_email='dave.j.cameron+pip@gmail.com',
-
-    # Choose your license
-    license='MIT',
+    license='Apache Software License 2.0',
 
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
