@@ -2,3 +2,4 @@
 include LICENSE.txt
 
 exclude requirements.txt
+prune ci
