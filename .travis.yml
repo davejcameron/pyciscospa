@@ -9,6 +9,8 @@ install: pip install tox
 script: tox
 notifications:
   email: false
+before_deploy:
+  - python $TRAVIS_BUILD_DIR/ci/travis_set_build.py --skip "$TRAVIS_TAG"
 deploy:
 - provider: pypi
   distributions: sdist
