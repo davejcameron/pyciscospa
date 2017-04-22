@@ -6,3 +6,5 @@ check-manifest
 readme_renderer
 flake8
 pytest
+pydocstyle
+pylint
