@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Command line interface."""
 from __future__ import print_function
 
 import argparse
@@ -8,7 +9,7 @@ from pyciscospa import CiscoClient
 
 
 def main():
-    """Main function"""
+    """Command line interface."""
     parser = argparse.ArgumentParser()
     parser.add_argument('-host', '--host',
                         required=True, help='SPA* host')

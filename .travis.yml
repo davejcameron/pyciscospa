@@ -13,7 +13,7 @@ before_deploy:
   - python $TRAVIS_BUILD_DIR/ci/travis_set_build.py --skip "$TRAVIS_TAG"
 deploy:
 - provider: pypi
-  distributions: sdist
+  distributions: sdist bdist_wheel
   server: https://testpypi.python.org/pypi
   user: davejcameron
   password:
@@ -24,6 +24,7 @@ deploy:
     tags: false
     condition: '"$TOXENV" == *"py27"*'
 - provider: pypi
+  distributions: sdist bdist_wheel
   user: davejcameron
   password:
     secure: C05iXJATlZfaTtLc2KCPixJtrkdTgmSnKfgJCC90dxdbxbgQtjzjLK5yqEGN9Rp74/77Jx4QewNPgZMx0f7hNFjIzGtAtWxrOyRja5Aw2XOdsem3gaxFA062qyti5OuRYBJOfJjGqAM9cX5hIXDNCFA2Wancxf1vqE1K2Knp/LOyQC3QPYX564O8FHdKV/Y208VbOLHbaF4V51+WeBZU+85QLAX64g8dLyAneHFhCzktKy3Q3GE5I30sS6Cy6FcmyqZRKSK0Hp5SIBNE96liwTVh8wqs2Hp8WM0IQfUq9V9iNvq4+h0lquOVyapA+nZ0U6oPWfhor+XKIB/wPPfGhilqI0CDLQ5BAcH2RJgb3FBXHGiFoTaTizegr9T7uYfN6POSLMTSvWlw/5mdirAtiasnqLN53g/73VfBridalKC+daBOkckCyaCCixSNVOL+bPNrV+ps3dqusafQWk6v5Z4MtJ9wQ8MmrUv8kn6p+tn8iMVU8pzTM+0fGbRYdvWlgPEyr3HEgPwHxEWifzREZlYchSKgRpK2EjoLC3NS++F3c99Y/qpqlQXly72PJd1WTsvbz7RvIQag1cJiCzzeQEMGR3weKMRl/Bo0ZVW2gErNHROJqxmm4wJwv41HW/1HMWONPt+9kVMJ3Wp5v+/iknybkq0sjM6SiN6m8+YODSs=

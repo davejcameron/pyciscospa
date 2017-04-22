@@ -1,6 +1,4 @@
-"""
-PyCiscoSPA
-"""
+"""PyCiscoSPA."""
 import requests
 from lxml.etree import fromstring
 from xmljson import parker
@@ -9,21 +7,23 @@ STATUS_URL = "http://{}/admin/status.xml&xuser={}&xpassword={}"
 
 
 class PyCiscoSPAError(Exception):
+    """Exception class for pyciscospa."""
+
     pass
 
 
 class CiscoClient(object):
+    """Cisco Phone Client."""
+
     def __init__(self, hostname, username, password):
         """Initialize the client object."""
-
         self.hostname = hostname
         self.username = username
         self.password = password
         self._data = {}
 
     def _get_data(self):
-        """Gets the status from the phone system"""
-
+        """Get the status from the phone system."""
         raw_res = requests.get(STATUS_URL.format(self.hostname, self.username,
                                                  self.password))
 
@@ -32,8 +32,7 @@ class CiscoClient(object):
         self._data = parker.data(fromstring(raw_res.content))
 
     def get_phones(self):
-        """Gets the status of the phone lines"""
-
+        """Get the status of the phone lines."""
         self._get_data()
         status = self._data
 

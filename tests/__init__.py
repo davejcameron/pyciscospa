@@ -1,1 +1,1 @@
-"""Tests for pyciscospa"""
+"""Tests for pyciscospa."""
