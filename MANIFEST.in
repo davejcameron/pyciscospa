@@ -1,5 +1,6 @@
 # Include the license file
 include LICENSE.txt
 
+exclude .pylintrc
 exclude requirements.txt
 prune ci
