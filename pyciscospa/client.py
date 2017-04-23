@@ -4,6 +4,7 @@ from lxml.etree import fromstring
 from xmljson import parker
 
 STATUS_URL = "http://{}/admin/status.xml&xuser={}&xpassword={}"
+REBOOT_URL = 'http://{}/apply.cgi;session_id={}'
 
 
 class PyCiscoSPAError(Exception):
@@ -15,7 +16,7 @@ class PyCiscoSPAError(Exception):
 class CiscoClient(object):
     """Cisco Phone Client."""
 
-    def __init__(self, hostname, username, password):
+    def __init__(self, hostname, username='admin', password='admin'):
         """Initialize the client object."""
         self.hostname = hostname
         self.username = username
@@ -30,6 +31,10 @@ class CiscoClient(object):
         if not raw_res.status_code == 200:
             raise PyCiscoSPAError("Login Error: Bad HTTP status code.")
         self._data = parker.data(fromstring(raw_res.content))
+
+    def _get_session(self):
+        """Get the current session id."""
+        return self._data['router-status']['Session_ID']
 
     def get_phones(self):
         """Get the status of the phone lines."""
@@ -60,3 +65,25 @@ class CiscoClient(object):
             lines.append(state)
 
         return lines
+
+    def reboot(self):
+        """Reboot the ATA."""
+        self._get_data()
+
+        payload = {'submit_button': 'Reboot',
+                   'submit_type': '',
+                   'change_action': '',
+                   'gui_action': 'Apply',
+                   'need_reboot': 1,
+                   'session_key': self._get_session(),
+                   'closeflg': 1,
+                   'privilege_str': '',
+                   'privilege_end': ''}
+
+        raw_res = requests.post(REBOOT_URL.format(self.hostname,
+                                                  self._get_session()),
+                                data=payload)
+
+        if raw_res.status_code == 200:
+            return True
+        return False
