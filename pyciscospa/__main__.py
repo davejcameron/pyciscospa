@@ -26,7 +26,7 @@ def main():
     if args.reboot:
         client.reboot()
     else:
-        print(client.get_phones())
+        print(client.phones())
 
 
 if __name__ == '__main__':

@@ -36,7 +36,7 @@ class CiscoClient(object):
         """Get the current session id."""
         return self._data['router-status']['Session_ID']
 
-    def get_phones(self):
+    def phones(self):
         """Get the status of the phone lines."""
         self._get_data()
         status = self._data
