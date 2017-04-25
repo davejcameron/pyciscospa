@@ -46,10 +46,18 @@ class CiscoClient(object):
             state = {
                 'line':
                     line,
-                'state':
-                    status['Call_{}_State_1_'.format(line)],
                 'hook_state':
                     status['Hook_State_{}_'.format(line)],
+                'call_duration':
+                    status['Call_{}_Duration_1_'.format(line)],
+                'call_peer_phone':
+                    status['Call_{}_Peer_Phone_1_'.format(line)],
+                'call_peer_name':
+                    status['Call_{}_Peer_Name_1_'.format(line)],
+                'call_state':
+                    status['Call_{}_State_1_'.format(line)],
+                'call_type':
+                    status['Call_{}_Type_1_'.format(line)],
                 'registration_state':
                     status['Registration_State'][line - 1],
                 'last_called_number':
@@ -59,7 +67,8 @@ class CiscoClient(object):
                 'last_registration_at':
                     status['Last_Registration_At'][line - 1],
                 'next_registration':
-                    status['Next_Registration_In'][line - 1]
+                    status['Next_Registration_In'][line - 1],
+
             }
 
             lines.append(state)

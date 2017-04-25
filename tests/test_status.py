@@ -30,30 +30,25 @@ class TestGetPhones(unittest.TestCase):
         self.assertIsInstance(client.phones(), list)
 
     @requests_mock.Mocker()
-    def test_get_phones_returns_list(self, mock):
+    def test_phones_returns_dictionary(self, mock):
         mock.get('http://127.0.0.1/admin/status.xml&xuser=admin&xpassword'
                  '=admin', text=load_fixture("status_registered.xml"))
         client = CiscoClient('127.0.0.1', 'admin', 'admin')
-        phone_lines = [{'registration_state': 'Registered',
-                        'state': 'Idle',
-                        'last_caller_number': 18007773333,
-                        'hook_state': 'On',
-                        'line': 1,
-                        'next_registration': '55 s',
-                        'last_called_number': 15555555555,
-                        'last_registration_at': '4/20/2017 14:17:53'},
-                       {'registration_state': 'Registered',
-                        'state': 'Idle',
-                        'last_caller_number': None,
-                        'hook_state': 'On',
-                        'line': 2,
-                        'next_registration': '202 s',
-                        'last_called_number': None,
-                        'last_registration_at': '4/20/2017 14:13:45'}]
-        self.assertListEqual(client.phones(), phone_lines)
+        line_1 = client.phones()[0]
+        self.assertEqual(line_1['registration_state'], 'Registered')
+        self.assertEqual(line_1['call_duration'], None)
+        self.assertEqual(line_1['call_peer_phone'], None)
+        self.assertEqual(line_1['call_peer_name'], None)
+        self.assertEqual(line_1['call_state'], 'Idle')
+        self.assertEqual(line_1['call_type'], None)
+        self.assertEqual(line_1['last_caller_number'], 18007773333)
+        self.assertEqual(line_1['last_called_number'], 15555555555)
+        self.assertEqual(line_1['last_registration_at'], '4/20/2017 14:17:53')
+        self.assertEqual(line_1['line'], 1)
+        self.assertEqual(line_1['next_registration'], '55 s')
 
     @requests_mock.Mocker()
-    def test_get_phones_should_return_None(self, mock):
+    def test_phones_should_return_None(self, mock):
         mock.get('http://127.0.0.1/admin/status.xml&xuser=admin&xpassword'
                  '=admin', text=load_fixture("status_registered.xml"))
         client = CiscoClient('127.0.0.1', 'admin', 'admin')
