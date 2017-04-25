@@ -1,5 +1,4 @@
 requests
-lxml
 xmljson
 requests-mock
 check-manifest
