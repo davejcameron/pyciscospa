@@ -1,6 +1,6 @@
 """PyCiscoSPA."""
-import requests
 from xml.etree.ElementTree import fromstring
+import requests
 from xmljson import parker
 
 STATUS_URL = "http://{}/admin/status.xml&xuser={}&xpassword={}"
