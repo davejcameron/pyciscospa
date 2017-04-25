@@ -24,7 +24,7 @@ Command Line Usage
 
    .. code:: bash
 
-      pyciscospa --host 192.168.1.20 --rebooot
+      pyciscospa --host 192.168.1.20 --reboot
       pyciscospa --host 192.168.1.20 -u admin -p admin --reboot
 
 
